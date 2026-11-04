@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>T Dot Consulting — Everyone finds their way</title>
+<meta name="description" content="Accessible signage and wayfinding consulting for schools, libraries and community centres in Toronto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --blue:#1D4ED8; --blue-mid:#5B8DEF; --sky:#DCE8FF; --navy:#0B1B3A;
+  --paper:#F4F7FD; --surface:#FFFFFF; --border:#C9D6EF;
+  --text:#101114; --text-soft:#38424F; --on-blue:#FFFFFF; --focus:#1D4ED8;
+  --danger:#B3261E;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --blue:#6E9BFF; --blue-mid:#8FB4FF; --sky:#16294D; --navy:#E8EEFB;
+    --paper:#0A1022; --surface:#121A2E; --border:#2A3A5C;
+    --text:#F2F5FB; --text-soft:#B9C5DA; --on-blue:#07122B; --focus:#8FB4FF;
+    --danger:#FF8A80;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --blue:#6E9BFF; --blue-mid:#8FB4FF; --sky:#16294D; --navy:#E8EEFB;
+  --paper:#0A1022; --surface:#121A2E; --border:#2A3A5C;
+  --text:#F2F5FB; --text-soft:#B9C5DA; --on-blue:#07122B; --focus:#8FB4FF;
+  --danger:#FF8A80;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font-family:"Atkinson Hyperlegible",Verdana,Geneva,sans-serif;font-size:18px;line-height:1.65}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:60}
+h1,h2,h3{font-family:"Archivo Black","Arial Black",Impact,sans-serif;font-weight:400;line-height:1.08;letter-spacing:-0.01em;color:var(--navy)}
+h1{font-size:clamp(2.2rem,5.4vw,4rem);margin:0 0 .4em}
+h2{font-size:clamp(1.6rem,3.4vw,2.4rem);margin:0 0 .5em}
+h3{font-size:clamp(1.1rem,2vw,1.45rem);margin:0 0 .4em}
+p{margin:0 0 1.1em;max-width:68ch}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--navy)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+img,svg{max-width:100%}
+.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+.wrap.narrow{width:min(760px,100% - 2.5rem)}
+.skip{position:absolute;left:-9999px;top:0;background:var(--blue);color:var(--on-blue);padding:.8rem 1.2rem;z-index:100;border-radius:0 0 8px 0}
+.skip:focus{left:0}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:2px solid var(--border)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand .name{font-family:"Archivo Black","Arial Black",Impact,sans-serif;font-size:1.35rem;color:var(--navy);line-height:1}
+.brand .dot{color:var(--blue)}
+nav.main ul{display:flex;gap:.3rem;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav.main a{display:block;padding:.5rem .8rem;border-radius:999px;text-decoration:none;color:var(--text);font-weight:700;font-size:.98rem}
+nav.main a:hover{background:var(--sky);color:var(--navy)}
+nav.main a[aria-current="page"]{background:var(--blue);color:var(--on-blue)}
+section{padding:clamp(2.4rem,5.5vw,4.4rem) 0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;align-items:center}
+@media (min-width:820px){.hero-grid{grid-template-columns:160px minmax(0,1fr);gap:3rem}}
+.lead{font-size:clamp(1.08rem,1.8vw,1.32rem);color:var(--text-soft);max-width:60ch}
+.btn{display:inline-block;background:var(--blue);color:var(--on-blue);text-decoration:none;font-weight:700;padding:.8rem 1.4rem;border-radius:999px;border:2px solid var(--blue);cursor:pointer;font-family:inherit;font-size:1rem}
+.btn:hover{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn.ghost:hover{background:var(--sky);color:var(--navy);border-color:var(--navy)}
+.btn.danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+.btn.danger:hover{background:var(--danger);color:#fff}
+.btn.small{padding:.45rem .95rem;font-size:.92rem}
+.dark-band{background:#0B1B3A;color:#F4F7FD}
+.dark-band h2,.dark-band h3{color:#FFFFFF}
+.dark-band p{color:#DCE8FF}
+:root[data-theme="dark"] .dark-band{background:#121A2E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dark-band{background:#121A2E}}
+.blue-band{background:#1D4ED8;color:#FFFFFF}
+.blue-band h2,.blue-band p{color:#FFFFFF}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.card{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:1.6rem}
+.card p:last-child{margin-bottom:0}
+.card .tier{font-family:"Archivo Black","Arial Black",Impact,sans-serif;color:var(--blue);font-size:.95rem;letter-spacing:.08em;margin-bottom:.5rem}
+.eyebrow{font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.82rem;color:var(--blue);margin:0 0 .8rem}
+.blue-band .eyebrow,.dark-band .eyebrow{color:#DCE8FF}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr);gap:2rem}
+@media (min-width:820px){.two-col{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3rem}}
+.note{background:var(--sky);border-radius:14px;padding:1.2rem 1.4rem}
+.note p{margin:0;color:var(--navy)}
+.posts{display:grid;gap:1.2rem}
+.post{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:1.6rem}
+.post .meta{font-size:.92rem;color:var(--text-soft)}
+.post-title{font-size:clamp(1.35rem,2.4vw,1.9rem);margin:.3rem 0 .4rem}
+.post-title a{text-decoration:none;color:var(--navy)}
+.post-title a:hover{color:var(--blue);text-decoration:underline}
+.pill{display:inline-block;background:var(--sky);color:var(--navy);border-radius:999px;padding:.25rem .8rem;font-weight:700;font-size:.85rem}
+.pill.draft{background:transparent;border:2px dashed var(--border);color:var(--text-soft)}
+.back{display:inline-block;font-weight:700;text-decoration:none;margin-bottom:1rem}
+.standfirst{font-size:clamp(1.1rem,1.9vw,1.3rem);color:var(--text-soft);border-left:5px solid var(--blue);padding-left:1.1rem;margin-bottom:2rem}
+.article-body h2{margin-top:2.2rem}
+.article-body h3{margin-top:1.7rem}
+.article-body figure{margin:2rem 0;padding:0}
+.article-body figcaption{font-size:.92rem;color:var(--text-soft);margin-top:.5rem}
+blockquote{margin:2rem 0;padding:1.3rem 1.5rem;background:var(--sky);border-radius:16px;border-left:6px solid var(--blue)}
+blockquote p{margin:0;font-family:"Archivo Black","Arial Black",Impact,sans-serif;font-size:clamp(1.05rem,1.9vw,1.3rem);line-height:1.3;color:var(--navy)}
+.table-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid var(--border);padding:.7rem .9rem;text-align:left;vertical-align:top}
+th{background:var(--sky);color:var(--navy)}
+caption{text-align:left;color:var(--text-soft);font-size:.9rem;padding-bottom:.6rem}
+.toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.6rem}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-weight:700;color:var(--navy);margin-bottom:.35rem}
+.field .hint{font-size:.9rem;color:var(--text-soft);margin:.3rem 0 0}
+input[type=text],textarea,select{
+  width:100%;font-family:inherit;font-size:1rem;padding:.7rem .85rem;border-radius:10px;
+  border:2px solid var(--border);
+  background-color:#FFFFFF;
+  color:#101114;
+  -webkit-text-fill-color:#101114;
+  caret-color:#1D4ED8;
+  color-scheme:light;
+  opacity:1;
+}
+input[type=text]::placeholder,textarea::placeholder{color:#5B6676;-webkit-text-fill-color:#5B6676;opacity:1}
+input[type=text]:focus,textarea:focus,select:focus{border-color:#1D4ED8}
+input:-webkit-autofill,input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#101114;
+  box-shadow:0 0 0 1000px #FFFFFF inset;
+}
+:root[data-theme="dark"] input[type=text],
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select{
+  background-color:#0E1626;color:#F2F5FB;-webkit-text-fill-color:#F2F5FB;color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) input[type=text],
+  :root:not([data-theme="light"]) textarea,
+  :root:not([data-theme="light"]) select{
+    background-color:#0E1626;color:#F2F5FB;-webkit-text-fill-color:#F2F5FB;color-scheme:dark;
+  }
+  :root:not([data-theme="light"]) input[type=text]::placeholder,
+  :root:not([data-theme="light"]) textarea::placeholder{color:#9DAAC2;-webkit-text-fill-color:#9DAAC2}
+  :root:not([data-theme="light"]) input:-webkit-autofill{
+    -webkit-text-fill-color:#F2F5FB;box-shadow:0 0 0 1000px #0E1626 inset;
+  }
+}
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.92em;background:var(--sky);color:var(--navy);
+  padding:.1em .35em;border-radius:5px;
+}
+textarea{min-height:360px;line-height:1.6;resize:vertical}
+.row{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem}
+@media (min-width:700px){.row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.status{padding:.8rem 1rem;border-radius:10px;background:var(--sky);color:var(--navy);font-weight:700;margin-bottom:1.2rem}
+.status.error{background:#FDE7E6;color:#7A1B16}
+:root[data-theme="dark"] .status.error{background:#3A1412;color:#FFB4AC}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .status.error{background:#3A1412;color:#FFB4AC}}
+.empty{border:3px dashed var(--border);border-radius:16px;padding:2.4rem;text-align:center;color:var(--text-soft)}
+.post-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+footer.site{background:var(--navy);color:var(--sky);padding:2.6rem 0;padding-bottom:calc(2.6rem + env(safe-area-inset-bottom,0px))}
+:root[data-theme="dark"] footer.site{background:var(--surface)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) footer.site{background:var(--surface)}}
+footer.site a{color:#FFFFFF}
+footer .brand .name{color:#FFFFFF}
+.sources{padding-left:1.2rem;color:var(--text-soft);font-size:.95rem}
+.sources li{margin-bottom:.5rem}
+.todo{color:var(--text-soft);font-style:italic}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="T Dot Consulting, home">
+      <svg width="30" height="45" viewBox="0 0 120 180" aria-hidden="true" focusable="false">
+        <circle cx="30" cy="30" r="20" fill="none" stroke="var(--navy)" stroke-width="7"/>
+        <circle cx="30" cy="90" r="22" fill="var(--blue)"/><circle cx="30" cy="150" r="22" fill="var(--blue)"/>
+        <circle cx="90" cy="30" r="22" fill="var(--blue)"/><circle cx="90" cy="90" r="22" fill="var(--blue)"/>
+        <circle cx="90" cy="150" r="20" fill="none" stroke="var(--navy)" stroke-width="7"/>
+      </svg>
+      <span class="name">T DOT<span class="dot">.</span></span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <ul>
+        <li><a href="#home" data-route="home">Home</a></li>
+        <li><a href="#services" data-route="services">What we do</a></li>
+        <li><a href="#braille" data-route="braille">Braille basics</a></li>
+        <li><a href="#blog" data-route="blog">Plain Sight</a></li>
+        <li><a href="#about" data-route="about">About</a></li>
+        <li><a href="#contact" data-route="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<div id="page-home" class="page">
+  <section>
+    <div class="wrap hero-grid">
+      <svg viewBox="0 0 120 180" width="160" height="240" role="img" aria-label="T Dot logo mark: a braille cell spelling the letter T">
+        <circle cx="30" cy="30" r="20" fill="none" stroke="var(--navy)" stroke-width="5"/>
+        <circle cx="30" cy="90" r="22" fill="var(--blue)"/><circle cx="30" cy="150" r="22" fill="var(--blue)"/>
+        <circle cx="90" cy="30" r="22" fill="var(--blue)"/><circle cx="90" cy="90" r="22" fill="var(--blue)"/>
+        <circle cx="90" cy="150" r="20" fill="none" stroke="var(--navy)" stroke-width="5"/>
+      </svg>
+      <div>
+        <h1>Everyone finds their way.</h1>
+        <p class="lead">We help schools, libraries and community centres make their buildings readable. Signage audits, standards advice, and the fix, sourced and supported.</p>
+        <p><a class="btn" href="#services">See how an audit works</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark-band">
+    <div class="wrap">
+      <p class="eyebrow">The problem</p>
+      <h2>Most buildings fail quietly.</h2>
+      <div class="two-col">
+        <div>
+          <p>Finding a washroom in an unfamiliar building means reading a sign. Take that away and the building becomes one a person can only use with help, every visit, even somewhere they have been a hundred times.</p>
+          <p>The barrier is not the space itself. It is what the space costs you in independence.</p>
+        </div>
+        <div>
+          <p>Signage gets added one piece at a time, over decades, by whoever handled that year’s renovation. Nobody checks the whole building against a standard, because in most public buildings nobody owns signage at all.</p>
+          <p>That is the job we do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How a building gets readable</p>
+      <h2>Feel it. See it. Scan it.</h2>
+      <div class="cards">
+        <div class="card">
+          <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+            <circle cx="18" cy="12" r="5" fill="none" stroke="var(--navy)" stroke-width="2"/>
+            <circle cx="18" cy="28" r="6" fill="var(--blue)"/><circle cx="18" cy="44" r="6" fill="var(--blue)"/>
+            <circle cx="38" cy="12" r="6" fill="var(--blue)"/><circle cx="38" cy="28" r="6" fill="var(--blue)"/>
+            <circle cx="38" cy="44" r="5" fill="none" stroke="var(--navy)" stroke-width="2"/>
+          </svg>
+          <h3>Feel it</h3>
+          <p>Braille and tactile lettering on room signs, shelf labels and directories.</p>
+        </div>
+        <div class="card">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="var(--navy)" stroke-width="3" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M4 28 C12 14 20 10 28 10 C36 10 44 14 52 28 C44 42 36 46 28 46 C20 46 12 42 4 28 Z"/>
+            <circle cx="28" cy="28" r="8" fill="var(--blue)" stroke="none"/>
+          </svg>
+          <h3>See it</h3>
+          <p>Contrast, sign height and type size that hold up across an entire building, not just at the front door.</p>
+        </div>
+        <div class="card">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="var(--navy)" stroke-width="3" aria-hidden="true" focusable="false">
+            <rect x="6" y="6" width="16" height="16"/><rect x="34" y="6" width="16" height="16"/><rect x="6" y="34" width="16" height="16"/>
+            <rect x="11" y="11" width="6" height="6" fill="var(--blue)" stroke="none"/>
+            <rect x="39" y="11" width="6" height="6" fill="var(--blue)" stroke="none"/>
+            <rect x="11" y="39" width="6" height="6" fill="var(--blue)" stroke="none"/>
+            <path d="M34 34 H42 V42 H50 V50 H34 Z"/>
+          </svg>
+          <h3>Scan it</h3>
+          <p>Smart codes that speak the sign aloud, for the many people with sight loss who do not read braille.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow">Who we work with</p>
+        <h2>Publicly funded. Publicly accountable. No design team.</h2>
+      </div>
+      <div>
+        <p>Large organizations already employ accessibility staff. Schools, libraries and community centres do not.</p>
+        <p>They have obligations under the AODA and the Ontario Building Code, a real interest in getting this right, and nobody internal to ask.</p>
+        <p>We are the people to ask.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blue-band">
+    <div class="wrap">
+      <h2>Start with a walk through the building.</h2>
+      <p>An audit takes an afternoon and tells you exactly what you need, in what order.</p>
+      <p><a class="btn" href="#contact" style="background:var(--on-blue);color:var(--blue);border-color:var(--on-blue)">Get in touch</a></p>
+    </div>
+  </section>
+</div>
+
+<div id="page-services" class="page" hidden>
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What we do</p>
+      <h1>Three ways to work with us.</h1>
+      <p class="lead">Most organizations start at the top and move down as budget allows.</p>
+      <div class="cards" style="margin-top:2rem">
+        <div class="card">
+          <p class="tier">TIER 1</p><h3>Audit</h3>
+          <p>We walk your building and check every sign against the current standards: tactile lettering, braille, contrast, mounting height, pictograms and wayfinding logic.</p>
+          <p>You get a written report with a prioritized fix list, so the urgent items are obvious and the rest can be budgeted over time.</p>
+          <p><strong>Best for:</strong> organizations that know something is wrong but not what.</p>
+        </div>
+        <div class="card">
+          <p class="tier">TIER 2</p><h3>Specify</h3>
+          <p>We turn the fix list into something a sign shop can produce. Materials, production methods, suppliers and artwork specifications that meet the standards.</p>
+          <p>No guesswork at the quoting stage, and no signs that have to be remade.</p>
+          <p><strong>Best for:</strong> organizations ready to make changes and buying from outside.</p>
+        </div>
+        <div class="card">
+          <p class="tier">TIER 3</p><h3>Source &amp; Support</h3>
+          <p>For buildings producing signage regularly, we bring the capability in-house: equipment, installation, staff training and ongoing support.</p>
+          <p>A new room label should not require a purchase order.</p>
+          <p><strong>Best for:</strong> campuses, library systems and anyone producing signs on demand.</p>
+        </div>
+      </div>
+      <div class="note" style="margin-top:2rem">
+        <p><strong>What we are not.</strong> We are not a manufacturer, we are not architects, and we are not the right fit for organizations that already run an accessibility team. We are the people who know the rules and know who to call.</p>
+      </div>
+    </div>
+  </section>
+  <section class="dark-band">
+    <div class="wrap">
+      <p class="eyebrow">The standards we work to</p>
+      <h2>The rules already exist. Most buildings have never been measured against them.</h2>
+      <div class="table-scroll" style="margin-top:1.4rem">
+        <table>
+          <caption style="color:var(--sky)">Summary only. Verify every figure against the current Ontario Building Code before publishing.</caption>
+          <thead><tr><th scope="col">What</th><th scope="col">What is typically required</th></tr></thead>
+          <tbody>
+            <tr><td>Braille</td><td>Grade 1 braille, placed below the tactile text</td></tr>
+            <tr><td>Mounting height</td><td>Between 1,200 mm and 1,500 mm above the floor</td></tr>
+            <tr><td>Contrast</td><td>Characters at least 70% contrast with their background</td></tr>
+            <tr><td>Lettering</td><td>Raised tactile characters, sans serif, no decorative faces</td></tr>
+            <tr><td>Governing documents</td><td>AODA, CSA B651, Ontario Building Code</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<div id="page-braille" class="page" hidden>
+  <section>
+    <div class="wrap narrow">
+      <p class="eyebrow">Braille basics</p>
+      <h1>What braille is, and what it is not.</h1>
+      <p class="standfirst">Most signage mistakes start with a misunderstanding of how braille works. This page covers what a building owner actually needs to know before ordering a sign.</p>
+
+      <h2>The cell</h2>
+      <p>Every braille character lives in a cell of six dot positions, two columns of three. Dots are numbered 1, 2 and 3 down the left column and 4, 5 and 6 down the right. Which dots are raised decides the character. Our logo is the braille letter T: dots 2, 3, 4 and 5.</p>
+      <p>It is read left to right, top to bottom, the same direction as print.</p>
+
+      <h2>Braille is a code, not a language</h2>
+      <p>This is the most common misunderstanding. Braille does not replace English or French. It is a way of writing a language by touch, so braille follows the grammar and spelling of whatever language it transcribes. A sign in braille is still a sign in English.</p>
+
+      <h2>Uncontracted and contracted</h2>
+      <p><strong>Uncontracted braille</strong> uses roughly one braille character per printed character. <strong>Contracted braille</strong> adds short forms, closer to shorthand, so it takes less space and is faster for a fluent reader.</p>
+      <p>These were long called grade 1 and grade 2. The Braille Authority of North America changed the preferred terms to uncontracted and contracted, so modern documents use those words. You will still hear both.</p>
+      <p>For signage in Canada, uncontracted is the convention, and the International Council on English Braille recommends uncontracted UEB for signage, with contracted allowed only for English sentences longer than ten words. Uncontracted braille also works across English and French, which matters in a bilingual country.</p>
+      <p>This is where Canada and the United States differ. American signage under the ADA requires contracted braille. Copying an American sign specification into a Canadian building is a real and common error.</p>
+
+      <h2>Unified English Braille</h2>
+      <p>Canada adopted Unified English Braille in April 2010, the first country in North America to do so. UEB is now used across eight English-speaking countries, which means a visitor who learned braille in Australia can read a sign in Toronto.</p>
+      <p>Braille Literacy Canada is the recognized braille authority in Canada and publishes accessible signage guidelines.</p>
+
+      <h2>Indicators: the part people forget</h2>
+      <p>Braille has no separate numerals or capital letters. It uses indicators placed before a character to change how it is read.</p>
+      <ul>
+        <li><strong>Numeric indicator</strong> before digits. Without it, "214" reads as the letters B, A, D.</li>
+        <li><strong>Capital indicator</strong> before a capital letter.</li>
+        <li><strong>Grade 1 indicator</strong> where a symbol could otherwise be mistaken for a contraction.</li>
+      </ul>
+      <p>Room numbers are the place this goes wrong most often, which matters because room numbers are most of what a wayfinding system says.</p>
+
+      <h2>What this means for a sign</h2>
+      <ul>
+        <li>Braille is placed below the tactile text, in a consistent position so a reader can find it without searching.</li>
+        <li>Dot height and spacing follow a standard, so a braille font is not a typeface choice. Getting the dot profile wrong makes a sign unreadable even when the text is correct.</li>
+        <li>Braille belongs on signs short enough to read by touch. A paragraph of braille on a wall is not useful.</li>
+        <li>Have braille proofread by a braille reader before production. A visual check cannot catch a translation error.</li>
+      </ul>
+
+      <h2>Braille is not the whole answer</h2>
+      <p>Most people with sight loss do not read braille. They are served by contrast, larger type, sign placement and audio. A sign with perfect braille and low contrast grey type still fails most of the people it was meant for, which is why our three pillars are feel it, see it and scan it rather than braille alone.</p>
+
+      <div class="note">
+        <p><strong>If you remember one thing:</strong> uncontracted Unified English Braille, placed below the tactile text, proofread by someone who reads braille, on a sign that also has strong contrast.</p>
+      </div>
+
+      <h2>Sources</h2>
+      <ul class="sources">
+        <li>Braille Literacy Canada. <a href="https://www.brailleliteracycanada.ca/en/news/braille-literacy-canada-celebrates-the-10th-anniversary-of-t" rel="noopener noreferrer">Tenth anniversary of the adoption of Unified English Braille.</a></li>
+        <li>International Council on English Braille. <a href="https://iceb.org/?p=25439" rel="noopener noreferrer">Braille signage.</a></li>
+        <li>Braille Authority of North America. <a href="https://brailleauthority.org/signage/Braille%20Signage%20Guidelines_final.pdf" rel="noopener noreferrer">Braille signage guidelines.</a></li>
+        <li>Braille Authority of North America. <a href="https://www.brailleauthority.org/node/60" rel="noopener noreferrer">U.S. and Canada adopt new braille terminology.</a></li>
+        <li>Braille Literacy Canada. <a href="https://www.brailleliteracycanada.ca/CMFiles/Accessible_Signage_Guidelines_BLC-PrintFormatted.pdf" rel="noopener noreferrer">Accessible signage guidelines.</a></li>
+      </ul>
+      <p class="todo">[Team: confirm each claim against the linked source before the presentation, and check our logo braille against a Braille Literacy Canada chart.]</p>
+    </div>
+  </section>
+</div>
+
+<div id="page-blog" class="page" hidden>
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">The blog</p>
+      <h1>Plain Sight</h1>
+      <p class="lead">Where we show our work. Real buildings, real signage, and what the standards actually require.</p>
+      <div class="toolbar" id="blog-toolbar"></div>
+      <div id="blog-status"></div>
+      <div class="posts" id="post-list"></div>
+    </div>
+  </section>
+</div>
+
+<div id="page-post" class="page" hidden>
+  <article>
+    <section style="padding-bottom:0">
+      <div class="wrap narrow">
+        <p><a class="back" href="#blog">← Back to Plain Sight</a></p>
+        <div id="post-head"></div>
+      </div>
+    </section>
+    <section class="article-body" style="padding-top:1.2rem">
+      <div class="wrap narrow" id="post-body"></div>
+    </section>
+  </article>
+</div>
+
+<div id="page-write" class="page" hidden>
+  <section>
+    <div class="wrap narrow">
+      <p><a class="back" href="#blog">← Back to Plain Sight</a></p>
+      <h1 id="write-heading">Write a post</h1>
+      <div id="write-status"></div>
+      <form id="write-form" novalidate>
+        <div class="field">
+          <label for="f-title">Title</label>
+          <input type="text" id="f-title" name="title" required autocomplete="off">
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="f-author">Author</label>
+            <input type="text" id="f-author" name="author" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-date">Date</label>
+            <input type="text" id="f-date" name="date" placeholder="November 10, 2026" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-excerpt">Standfirst</label>
+          <input type="text" id="f-excerpt" name="excerpt">
+          <p class="hint">One or two sentences, shown on the index and at the top of the post.</p>
+        </div>
+        <div class="field">
+          <label for="f-template">Start from a template</label>
+          <select id="f-template">
+            <option value="">Blank post</option>
+            <option value="audit">Entry 01: building walk-through</option>
+            <option value="standards">Entry 02: standards explainer</option>
+            <option value="interview">Entry 03: expert interview</option>
+            <option value="media">Entry 04: video and transcript</option>
+          </select>
+          <p class="hint">Loading a template replaces whatever is in the body field.</p>
+        </div>
+        <div class="field">
+          <label for="f-body">Body</label>
+          <textarea id="f-body" name="body" spellcheck="true"></textarea>
+          <p class="hint">Formatting: <code>## Heading</code>, <code>### Subheading</code>, <code>&gt; quote</code>, <code>- list item</code>, <code>[link](https://…)</code>, and <code>![alt text](image URL)</code>. Blank lines separate paragraphs. Always write real alt text.</p>
+        </div>
+        <div class="field">
+          <label for="f-status">Status</label>
+          <select id="f-status">
+            <option value="published">Published, visible to everyone</option>
+            <option value="draft">Draft, visible only to the team</option>
+          </select>
+        </div>
+        <div class="post-actions">
+          <button type="submit" class="btn" id="f-save">Save post</button>
+          <a class="btn ghost" href="#blog">Cancel</a>
+          <button type="button" class="btn danger" id="f-delete" hidden>Delete post</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+<div id="page-about" class="page" hidden>
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">About</p>
+      <h1>A consultancy built by graphic communications students.</h1>
+      <div class="two-col" style="margin-top:1.5rem">
+        <div>
+          <p>T Dot Consulting is a team of <span class="todo">[number]</span> students at Toronto Metropolitan University’s School of Graphic Communications Management.</p>
+          <p>The name is Toronto twice over. T Dot is what people call this city, and a braille character is built from six dots. Our logo is the braille letter T: dots two, three, four and five.</p>
+          <p>We work on tactile and visual accessibility in public buildings because it sits exactly where our training sits: substrates, production methods, typography and standards.</p>
+        </div>
+        <div>
+          <h3>Why this site looks the way it does</h3>
+          <p>A consultancy that audits accessibility cannot ship an inaccessible website. So this one uses Atkinson Hyperlegible, a typeface designed by the Braille Institute to keep similar letters from being confused, contrast checked colour pairings, visible keyboard focus, and alt text on every image.</p>
+          <p>We tested it the same way we would test a client’s building.</p>
+        </div>
+      </div>
+      <svg style="display:block;margin:2.2rem 0" viewBox="0 0 116 30" width="260" height="34" role="img" aria-label="The words t dot written in braille">
+        <circle cx="5" cy="15" r="3.6" fill="var(--blue)"/><circle cx="5" cy="25" r="3.6" fill="var(--blue)"/><circle cx="15" cy="5" r="3.6" fill="var(--blue)"/><circle cx="15" cy="15" r="3.6" fill="var(--blue)"/>
+        <circle cx="53" cy="5" r="3.6" fill="var(--blue)"/><circle cx="63" cy="5" r="3.6" fill="var(--blue)"/><circle cx="63" cy="15" r="3.6" fill="var(--blue)"/>
+        <circle cx="77" cy="5" r="3.6" fill="var(--blue)"/><circle cx="77" cy="25" r="3.6" fill="var(--blue)"/><circle cx="87" cy="15" r="3.6" fill="var(--blue)"/>
+        <circle cx="101" cy="15" r="3.6" fill="var(--blue)"/><circle cx="101" cy="25" r="3.6" fill="var(--blue)"/><circle cx="111" cy="5" r="3.6" fill="var(--blue)"/><circle cx="111" cy="15" r="3.6" fill="var(--blue)"/>
+      </svg>
+      <h2>The team</h2>
+      <p class="todo">[Team member names and roles. One line each: what they own on this project.]</p>
+    </div>
+  </section>
+</div>
+
+<div id="page-contact" class="page" hidden>
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1>Come see us present.</h1>
+      <div class="two-col" style="margin-top:1.5rem">
+        <div>
+          <p class="lead">We are presenting what we found and what we would change, in <span class="todo">[room]</span> on <span class="todo">[date]</span> at <span class="todo">[time]</span>.</p>
+          <p>Everyone is welcome. There will be a short question period at the end.</p>
+          <p><a class="btn" href="#blog">Read Plain Sight</a></p>
+        </div>
+        <div class="note">
+          <p><strong>Get in touch</strong><br><span class="todo">[Email address]</span><br><span class="todo">[Social handle]</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="brand" style="margin-bottom:1rem">
+      <svg width="26" height="39" viewBox="0 0 120 180" aria-hidden="true" focusable="false">
+        <circle cx="30" cy="30" r="18" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+        <circle cx="30" cy="90" r="22" fill="#FFFFFF"/><circle cx="30" cy="150" r="22" fill="#FFFFFF"/>
+        <circle cx="90" cy="30" r="22" fill="#FFFFFF"/><circle cx="90" cy="90" r="22" fill="#FFFFFF"/>
+        <circle cx="90" cy="150" r="18" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+      </svg>
+      <span class="name">T DOT.</span>
+    </div>
+    <p style="color:#DCE8FF">Accessible signage and wayfinding consulting for public institutions in Toronto.</p>
+    <p style="color:#DCE8FF"><a href="#home">Home</a> · <a href="#services">What we do</a> · <a href="#braille">Braille basics</a> · <a href="#blog">Plain Sight</a> · <a href="#about">About</a> · <a href="#contact">Contact</a></p>
+    <p style="color:#9FB6E0;font-size:.9rem">A student project for GCM 375, School of Graphic Communications Management, Toronto Metropolitan University. T Dot Consulting is not a real company.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var TEMPLATES = {
+    audit: "[Open with the building, the date, who went, and what you expected. Keep it concrete.]\n\n![Describe this photograph: what the sign shows, how it is mounted, and what is missing.](paste image URL here)\n\n## What we counted\n\n[How many signs in total. How many had tactile lettering, braille, correct mounting height, enough contrast. A count is more persuasive than an adjective.]\n\n## The pattern we kept seeing\n\nBuildings tend to get accessibility right at the entrance and lose it immediately afterward. The front door is what gets inspected, photographed and budgeted for. The corridor on the third floor gets a label maker.\n\n> A building can meet code at the front door and fail everywhere a person actually needs to go.\n\n## What it would take to fix\n\n[For two or three of the worst signs, say what would be required. Keep it practical. This is the part that shows we are consultants rather than critics.]\n\n## Sources\n\n- [Any source you cite, with a link.]",
+    standards: "Three documents matter in Ontario. The AODA sets the provincial accessibility requirements. CSA B651 defines signage as visual and tactile communication including braille. The Ontario Building Code carries the construction requirements. Where they overlap, the stricter one applies.\n\n## The specifications, in plain language\n\n- Braille: grade 1, placed below the tactile text\n- Mounting height: roughly 1,200 mm to 1,500 mm above the floor\n- Contrast: at least 70% between characters and background\n- Characters: raised, sans serif, no decorative or italic faces\n\n[Verify every figure against the current Ontario Building Code before publishing.]\n\n## The thing most people get wrong\n\nBraille is not the whole answer. Only a minority of people with sight loss read it, and the rest are served by contrast, type size, placement and audio. A sign with perfect braille and grey type on a white plate still fails most of the people it was meant for.\n\n> Braille alone is a gesture. Braille plus contrast plus placement is a sign.\n\n## Sources\n\n- CSA Group. (2018). CSA B651-18: Accessible design for the built environment.\n- [Ontario Building Code, O. Reg. 332/12, s. 3.8, cited from Ontario e-Laws.]",
+    interview: "[One or two sentences introducing who you spoke to, what they do, and the most surprising thing they said. Write this last.]\n\n## The conversation\n\n**How did you end up producing tactile signage?**\n\n[Answer]\n\n**What do clients most often get wrong before they call you?**\n\n[Answer]\n\n**Which part of the standard is hardest to meet in practice?**\n\n[Answer]\n\n**What does a good brief from a school or library look like?**\n\n[Answer]\n\n## What we took from it\n\n[Two or three sentences. What it confirmed, and what it changed.]\n\n[Before publishing: send the draft to the interviewee for approval and confirm how they want to be named.]",
+    media: "Reading about a building is not the same as moving through one. So we filmed the walk.\n\n[Paste the video embed or link here. Captions on, always.]\n\n## Transcript\n\n[Full transcript, with speaker labels and timestamps every thirty seconds or so. Captions and a transcript are both required, and a site like ours has no excuse for skipping them.]\n\n## What the walk showed\n\n[What the footage makes obvious that a photograph does not: distance between signs, dead ends, the point where a person would have to ask for help.]"
+  };
+
+  var STATIC_ROUTES = ["home","services","braille","blog","about","contact","write"];
+  var TITLES = {
+    home:"T Dot Consulting — Everyone finds their way",
+    services:"What we do — T Dot Consulting",
+    braille:"Braille basics — T Dot Consulting",
+    blog:"Plain Sight — T Dot Consulting",
+    about:"About — T Dot Consulting",
+    contact:"Contact — T Dot Consulting",
+    write:"Write a post — T Dot Consulting"
+  };
+
+  var db = null, canWrite = false, posts = [], loaded = false, loadTimer = null;
+  var editingId = null;
+
+  var listEl = document.getElementById("post-list");
+  var statusEl = document.getElementById("blog-status");
+  var toolbarEl = document.getElementById("blog-toolbar");
+  var writeStatusEl = document.getElementById("write-status");
+
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if(cls){ n.className = cls; }
+    if(text !== undefined && text !== null){ n.textContent = text; }
+    return n;
+  }
+  function clear(node){ while(node.firstChild){ node.removeChild(node.firstChild); } }
+  function safeUrl(u){
+    var s = String(u || "").trim();
+    return (/^https:\/\//i.test(s) || /^http:\/\//i.test(s)) ? s : "";
+  }
+  function slugify(s){
+    var base = String(s || "post").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48);
+    if(!base){ base = "post"; }
+    return base + "-" + Date.now().toString(36);
+  }
+
+  /* ---- very small, safe text formatter: builds DOM nodes, never innerHTML ---- */
+  function inline(target, text){
+    var rest = String(text);
+    var pattern = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*([^*]+)\*\*/;
+    var m;
+    while((m = pattern.exec(rest)) !== null){
+      if(m.index > 0){ target.appendChild(document.createTextNode(rest.slice(0, m.index))); }
+      if(m[1] !== undefined){
+        var href = safeUrl(m[2]);
+        if(href){
+          var a = el("a", null, m[1]);
+          a.href = href; a.rel = "noopener noreferrer";
+          target.appendChild(a);
+        } else {
+          target.appendChild(document.createTextNode(m[1]));
+        }
+      } else {
+        target.appendChild(el("strong", null, m[3]));
+      }
+      rest = rest.slice(m.index + m[0].length);
+    }
+    if(rest){ target.appendChild(document.createTextNode(rest)); }
+  }
+
+  function renderBody(container, body){
+    clear(container);
+    var blocks = String(body || "").replace(/\r\n/g,"\n").split(/\n{2,}/);
+    blocks.forEach(function(block){
+      var raw = block.trim();
+      if(!raw){ return; }
+
+      var img = raw.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+      if(img){
+        var url = safeUrl(img[2]);
+        var fig = el("figure");
+        if(url){
+          var image = document.createElement("img");
+          image.src = url; image.alt = img[1] || ""; image.loading = "lazy";
+          image.style.borderRadius = "14px";
+          fig.appendChild(image);
+        } else {
+          var slot = el("div", "empty", "Image placeholder");
+          fig.appendChild(slot);
+        }
+        if(img[1]){ fig.appendChild(el("figcaption", null, "Alt text: " + img[1])); }
+        container.appendChild(fig);
+        return;
+      }
+      if(raw.indexOf("### ") === 0){ container.appendChild(el("h3", null, raw.slice(4))); return; }
+      if(raw.indexOf("## ") === 0){ container.appendChild(el("h2", null, raw.slice(3))); return; }
+      if(raw.indexOf("> ") === 0){
+        var bq = el("blockquote"); var bp = el("p");
+        inline(bp, raw.replace(/^>\s?/gm,"").replace(/\n/g," "));
+        bq.appendChild(bp); container.appendChild(bq); return;
+      }
+      if(/^-\s+/.test(raw)){
+        var ul = el("ul");
+        raw.split("\n").forEach(function(line){
+          var t = line.replace(/^-\s+/,"").trim();
+          if(!t){ return; }
+          var li = el("li"); inline(li, t); ul.appendChild(li);
+        });
+        container.appendChild(ul); return;
+      }
+      var p = el("p");
+      inline(p, raw.replace(/\n/g," "));
+      container.appendChild(p);
+    });
+  }
+
+  /* ---------------- rendering ---------------- */
+  function setStatus(node, msg, isError){
+    clear(node);
+    if(!msg){ return; }
+    node.appendChild(el("div", "status" + (isError ? " error" : ""), msg));
+  }
+
+  function renderToolbar(){
+    clear(toolbarEl);
+    if(canWrite){
+      var a = el("a", "btn", "Write a new post");
+      a.href = "#write";
+      a.addEventListener("click", function(){ editingId = null; });
+      toolbarEl.appendChild(a);
+      toolbarEl.appendChild(el("span", "meta", "You can publish on this site."));
+    }
+  }
+
+  function renderList(){
+    clear(listEl);
+    var visible = posts.filter(function(p){ return canWrite || p.status !== "draft"; });
+    if(!visible.length){
+      var box = el("div","empty");
+      box.appendChild(el("p", null, loaded ? "No entries yet." : "Loading entries…"));
+      if(loaded && canWrite){
+        var b = el("a","btn","Write the first entry"); b.href = "#write";
+        b.addEventListener("click", function(){ editingId = null; });
+        box.appendChild(b);
+      }
+      listEl.appendChild(box);
+      return;
+    }
+    visible.forEach(function(p){
+      var art = el("article","post");
+      var pillRow = el("p");
+      pillRow.appendChild(el("span", "pill" + (p.status === "draft" ? " draft" : ""), p.status === "draft" ? "Draft" : "Published"));
+      art.appendChild(pillRow);
+      var h = el("h2","post-title");
+      var link = el("a", null, p.title || "Untitled");
+      link.href = "#post-" + p.id;
+      h.appendChild(link); art.appendChild(h);
+      var meta = el("p","meta");
+      meta.textContent = (p.author ? "By " + p.author : "") + (p.author && p.date ? " · " : "") + (p.date || "");
+      art.appendChild(meta);
+      if(p.excerpt){ art.appendChild(el("p", null, p.excerpt)); }
+      var actions = el("div","post-actions");
+      var read = el("a","btn ghost small","Read");
+      read.href = "#post-" + p.id;
+      actions.appendChild(read);
+      if(canWrite){
+        var edit = el("button","btn ghost small","Edit");
+        edit.type = "button";
+        edit.addEventListener("click", function(){ editingId = p.id; location.hash = "#write"; });
+        actions.appendChild(edit);
+      }
+      art.appendChild(actions);
+      listEl.appendChild(art);
+    });
+  }
+
+  function renderPost(id){
+    var head = document.getElementById("post-head");
+    var body = document.getElementById("post-body");
+    clear(head); clear(body);
+    var p = posts.filter(function(x){ return x.id === id; })[0];
+    if(!p){
+      head.appendChild(el("h1", null, loaded ? "Entry not found" : "Loading…"));
+      if(loaded){ body.appendChild(el("p", null, "That entry may have been removed, or the link may be wrong.")); }
+      return;
+    }
+    if(p.status === "draft"){
+      var d = el("p"); d.appendChild(el("span","pill draft","Draft, not public")); head.appendChild(d);
+    }
+    head.appendChild(el("h1", null, p.title || "Untitled"));
+    var meta = el("p","meta");
+    meta.textContent = (p.author ? "By " + p.author : "") + (p.author && p.date ? " · " : "") + (p.date || "");
+    head.appendChild(meta);
+    if(p.excerpt){ body.appendChild(el("p","standfirst", p.excerpt)); }
+    var holder = el("div");
+    renderBody(holder, p.body);
+    body.appendChild(holder);
+    if(canWrite){
+      var actions = el("div","post-actions");
+      var edit = el("button","btn ghost small","Edit this post");
+      edit.type = "button";
+      edit.addEventListener("click", function(){ editingId = p.id; location.hash = "#write"; });
+      actions.appendChild(edit);
+      body.appendChild(actions);
+    }
+  }
+
+  /* ---------------- editor ---------------- */
+  var form = document.getElementById("write-form");
+  var fTitle = document.getElementById("f-title");
+  var fAuthor = document.getElementById("f-author");
+  var fDate = document.getElementById("f-date");
+  var fExcerpt = document.getElementById("f-excerpt");
+  var fBody = document.getElementById("f-body");
+  var fStatus = document.getElementById("f-status");
+  var fTemplate = document.getElementById("f-template");
+  var fDelete = document.getElementById("f-delete");
+  var fSave = document.getElementById("f-save");
+
+  fTemplate.addEventListener("change", function(){
+    var t = TEMPLATES[fTemplate.value];
+    if(t){ fBody.value = t; }
+  });
+
+  function fillEditor(){
+    document.getElementById("write-heading").textContent = editingId ? "Edit post" : "Write a post";
+    setStatus(writeStatusEl, canWrite ? "" : "You are signed in as a reader, so saving is turned off. Ask the site owner for Contributor or Editor access.", !canWrite);
+    fSave.disabled = !canWrite;
+    fDelete.hidden = !(editingId && canWrite);
+    fTemplate.value = "";
+    var p = editingId ? posts.filter(function(x){ return x.id === editingId; })[0] : null;
+    fTitle.value = p ? (p.title || "") : "";
+    fAuthor.value = p ? (p.author || "") : "";
+    fDate.value = p ? (p.date || "") : "";
+    fExcerpt.value = p ? (p.excerpt || "") : "";
+    fBody.value = p ? (p.body || "") : "";
+    fStatus.value = p ? (p.status || "published") : "published";
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!db || !canWrite){ return; }
+    var title = fTitle.value.trim();
+    if(!title){ setStatus(writeStatusEl, "A title is required.", true); fTitle.focus(); return; }
+    var id = editingId || slugify(title);
+    var now = Date.now();
+    var existing = posts.filter(function(x){ return x.id === id; })[0];
+    var doc = {
+      title: title,
+      author: fAuthor.value.trim(),
+      date: fDate.value.trim(),
+      excerpt: fExcerpt.value.trim(),
+      body: fBody.value,
+      status: fStatus.value === "draft" ? "draft" : "published",
+      createdAt: existing && existing.createdAt ? existing.createdAt : now,
+      updatedAt: now
+    };
+    fSave.disabled = true;
+    setStatus(writeStatusEl, "Saving…", false);
+    db.doc("posts/" + id).set(doc).then(function(){
+      editingId = null;
+      location.hash = "#post-" + id;
+    }).catch(function(err){
+      fSave.disabled = false;
+      var code = err && err.code ? err.code : "";
+      setStatus(writeStatusEl,
+        code === "permission_denied"
+          ? "Saving was refused. Your access level does not allow publishing on this site."
+          : "That did not save. Check your connection and try again.", true);
+    });
+  });
+
+  fDelete.addEventListener("click", function(){
+    if(!db || !editingId) return;
+    if(!window.confirm("Delete this post permanently?")) return;
+    var id = editingId;
+    db.doc("posts/" + id).delete().then(function(){
+      editingId = null;
+      location.hash = "#blog";
+    }).catch(function(){
+      setStatus(writeStatusEl, "That did not delete. Try again in a moment.", true);
+    });
+  });
+
+  /* ---------------- router ---------------- */
+  function show(route){
+    var isPost = route.indexOf("post-") === 0;
+    var base = isPost ? "post" : (STATIC_ROUTES.indexOf(route) !== -1 ? route : "home");
+    if(base === "write" && !canWrite && loaded){ /* still show, editor explains */ }
+    ["home","services","braille","blog","about","contact","write","post"].forEach(function(r){
+      var node = document.getElementById("page-" + r);
+      if(node){ node.hidden = (r !== base); }
+    });
+    document.querySelectorAll("nav.main a[data-route]").forEach(function(a){
+      var r = a.getAttribute("data-route");
+      var active = (r === base) || (r === "blog" && (base === "post" || base === "write"));
+      if(active){ a.setAttribute("aria-current","page"); } else { a.removeAttribute("aria-current"); }
+    });
+    document.title = isPost ? "Plain Sight — T Dot Consulting" : (TITLES[base] || TITLES.home);
+    if(base === "post"){ renderPost(route.slice(5)); }
+    if(base === "write"){ fillEditor(); }
+    if(base === "blog"){ renderList(); }
+    window.scrollTo(0,0);
+  }
+  function currentRoute(){ return (location.hash || "#home").replace(/^#/,""); }
+  window.addEventListener("hashchange", function(){ show(currentRoute()); });
+  show(currentRoute());
+
+  /* ---------------- data ---------------- */
+  function refresh(){
+    renderToolbar();
+    var r = currentRoute();
+    if(r === "blog"){ renderList(); }
+    else if(r.indexOf("post-") === 0){ renderPost(r.slice(5)); }
+    else if(r === "write"){ fillEditor(); }
+  }
+
+  (async function init(){
+    var user = null;
+    try { user = await claude.use("user"); } catch(e) { user = null; }
+    try { db = await claude.use("db"); } catch(e) { db = null; }
+
+    if(user){
+      canWrite = (user.canEdit && user.canEdit()) || (user.can && user.can("data.write") !== false);
+    }
+    if(!db){
+      loaded = true;
+      setStatus(statusEl, "The entry library cannot be reached from this view, so only the site itself is shown.", true);
+      refresh();
+      return;
+    }
+
+    loadTimer = setTimeout(function(){
+      if(!loaded){ setStatus(statusEl, "Entries are taking a while to load. They may not be up to date yet.", false); }
+    }, 10000);
+
+    db.collection("posts").onSnapshot(function(snap){
+      loaded = true;
+      if(loadTimer){ clearTimeout(loadTimer); loadTimer = null; }
+      setStatus(statusEl, "", false);
+      posts = [];
+      snap.docs.forEach(function(d){
+        var data = d.data() || {};
+        posts.push({
+          id: d.id,
+          title: typeof data.title === "string" ? data.title : "",
+          author: typeof data.author === "string" ? data.author : "",
+          date: typeof data.date === "string" ? data.date : "",
+          excerpt: typeof data.excerpt === "string" ? data.excerpt : "",
+          body: typeof data.body === "string" ? data.body : "",
+          status: data.status === "draft" ? "draft" : "published",
+          createdAt: typeof data.createdAt === "number" ? data.createdAt : 0
+        });
+      });
+      posts.sort(function(a,b){ return (b.createdAt || 0) - (a.createdAt || 0); });
+      refresh();
+    }, function(){
+      loaded = true;
+      if(loadTimer){ clearTimeout(loadTimer); loadTimer = null; }
+      setStatus(statusEl, "The entry library could not be loaded.", true);
+      refresh();
+    });
+
+    refresh();
+  })();
+})();
+</script>
+</body>
+</html>
